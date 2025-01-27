@@ -19,7 +19,6 @@ fi
 
 lsiown -R abc:abc /config
 
-ln -s /config /sl
 ln -s /config/upload /code/static/upload
 cp /config/simplelogin.env /code/.env
 

@@ -1,0 +1,19 @@
+name: Build Image On Release
+
+on:
+  release:
+    types: [published]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  call-workflow:
+    uses: linuxserver-labs/docker-actions/.github/workflows/build-image.yml@v7.0.6
+    with:
+      repo_owner: ${{ github.repository_owner }}
+      app_name: "simplelogin"
+      release_type: "github"
+      release_url: "https://api.github.com/repos/simple-login/app"
+      target-arch: "64"
+    secrets:
+      OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
