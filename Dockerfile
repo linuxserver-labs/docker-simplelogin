@@ -53,8 +53,10 @@ RUN \
     pkg-config \
     ninja-build \
     clang && \
-  curl -o /tmp/uv-installer.sh -L https://astral.sh/uv/install.sh && \
-  sh /tmp/uv-installer.sh && \
+  curl -o /tmp/uv.tar.gz -sL "https://github.com/astral-sh/uv/releases/latest/download/uv-x86_64-unknown-linux-gnu.tar.gz" && \
+  tar xzf /tmp/uv.tar.gz -C /tmp/ && \
+  mv /tmp/uv-x86_64-unknown-linux-gnu/uv /usr/bin/uv && \
+  mv /tmp/uv-x86_64-unknown-linux-gnu/uvx /usr/bin/uvx && \
   uv python install `cat .python-version` && \
   uv sync --locked && \
   echo "**** install runtime packages ****" && \
