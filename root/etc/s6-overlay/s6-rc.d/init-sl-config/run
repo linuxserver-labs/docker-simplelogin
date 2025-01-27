@@ -1,0 +1,49 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+
+mkdir -p \
+    /config/gnupg \
+    /config/upload
+
+if [[ ! -f "/config/dkim.key" ]]; then
+    openssl genrsa -out /config/dkim.key -traditional 1024
+fi
+
+if [[ ! -f "/config/dkim.pub.key" ]]; then
+    openssl rsa -in /config/dkim.key -pubout -out /config/dkim.pub.key
+fi
+
+if [[ ! -f "/config/simplelogin.env" ]]; then
+    cp /defaults/simplelogin.env /config/simplelogin.env
+fi
+
+lsiown -R abc:abc /config
+
+ln -s /config /sl
+ln -s /config/upload /code/static/upload
+cp /config/simplelogin.env /code/.env
+
+if [[ -z "${DB_URI}" ]]; then
+    echo "*** No DB_URI set, cannot configure database settings. ***"
+    sleep infinity
+else
+    echo "*** Waiting for DB_URI ${DB_URI} to be reachable. ***"
+    DBCOUNT=0
+    HOST=$(echo $DB_URI | awk -F[:@/] '{print $6}')
+    PORT=$(echo $DB_URI | awk -F[:@/] '{print $7}')
+    while true; do
+        if nc -w1 "${HOST}" "${PORT}" >/dev/null 2>&1; then
+            break
+        fi
+        DBCOUNT=$((DBCOUNT+1))
+        if [[ ${DBCOUNT} -gt 6 ]]; then
+            echo "*** Defined DB_URI ${DB_URI} is not reachable, cannot proceed. ***"
+            sleep infinity
+        fi
+        sleep 5
+    done
+fi
+
+cd /code
+alembic upgrade head
+/code/.venv/bin/python /code/init_app.py
