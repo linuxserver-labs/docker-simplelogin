@@ -41,7 +41,7 @@ COPY --from=buildstage /simplelogin/ /code/
 
 WORKDIR /code
 
-ENV PATH="$HOME/.local/bin:/code/.venv/bin:$PATH"
+ENV PATH="/usr/bin:/code/.venv/bin:$PATH"
 
 # Install deps
 RUN \
