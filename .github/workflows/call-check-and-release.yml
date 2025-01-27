@@ -13,5 +13,6 @@ jobs:
       app_name: "simplelogin"
       release_type: "github"
       release_url: "https://api.github.com/repos/simple-login/app"
+      target-arch: "amd64"
     secrets:
       repo_release_token: ${{ secrets.repo_release_token }}
