@@ -47,7 +47,7 @@ ENV PATH="$HOME/.local/bin:/code/.venv/bin:$PATH"
 RUN \
   echo "**** install build packages ****" && \
   apt-get update && \
-  apt-get install -y \
+  apt-get install -y --no-install-recommends \
     gcc \
     git \
     libre2-dev \
@@ -57,7 +57,11 @@ RUN \
   curl -o /tmp/uv-installer.sh -L https://astral.sh/uv/install.sh && \
   sh /tmp/uv-installer.sh && \
   uv python install `cat .python-version` && \
-  uv sync --locked && \
+  case "$(uname -m)" in \
+    'x86_64') export ARGS='' ;; \
+    'aarch64') export ARGS='--no-install-package pyre2 --no-install-package pycryptodome' ;; \
+  esac && \
+  uv sync --no-dev --locked $ARGS && \
   echo "**** install runtime packages ****" && \
   apt-get install -y \
     gnupg \
