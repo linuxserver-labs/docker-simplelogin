@@ -51,7 +51,7 @@ The architectures supported by this image are:
 | Architecture | Available | Tag |
 | :----: | :----: | ---- |
 | x86-64 | ✅ | latest |
-| arm64 | ✅ | latest |
+| arm64 | ❌ | latest |
 
 ## Application Setup
 
