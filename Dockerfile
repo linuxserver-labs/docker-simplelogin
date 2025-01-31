@@ -48,6 +48,7 @@ RUN \
   echo "**** install build packages ****" && \
   apt-get update && \
   apt-get install -y \
+    gcc \
     git \
     libre2-dev \
     pkg-config \
@@ -63,6 +64,7 @@ RUN \
     libre2-10 && \
   echo "**** cleanup ****" && \
   apt-get purge -y \
+    gcc \
     git \
     libre2-dev \
     pkg-config \
