@@ -49,7 +49,7 @@ RUN \
   apt-get update && \
   apt-get install -y --no-install-recommends \
     clang \
-    gcc \
+    gcc-10 \
     git \
     libre2-dev \
     ninja-build \
@@ -57,11 +57,7 @@ RUN \
   curl -o /tmp/uv-installer.sh -L https://astral.sh/uv/install.sh && \
   sh /tmp/uv-installer.sh && \
   uv python install `cat .python-version` && \
-  case "$(uname -m)" in \
-    'x86_64') export ARGS='' ;; \
-    'aarch64') export ARGS='--no-install-package pycryptodome' ;; \
-  esac && \
-  uv sync --no-dev --locked --no-cache $ARGS && \
+  uv sync --no-dev --locked --no-cache && \
   echo "**** install runtime packages ****" && \
   apt-get install -y \
     gnupg \
@@ -69,7 +65,7 @@ RUN \
   echo "**** cleanup ****" && \
   apt-get purge -y \
     clang \
-    gcc \
+    gcc-10 \
     git \
     libre2-dev \
     ninja-build \
