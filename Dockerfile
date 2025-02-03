@@ -48,9 +48,7 @@ RUN \
   echo "**** install build packages ****" && \
   apt-get update && \
   apt-get install -y --no-install-recommends \
-    build-essential \
     clang \
-    cmake \
     gcc \
     git \
     libre2-dev \
@@ -66,9 +64,7 @@ RUN \
     libre2-10 && \
   echo "**** cleanup ****" && \
   apt-get purge -y \
-    build-essential \
     clang \
-    cmake \
     gcc \
     git \
     libre2-dev \
