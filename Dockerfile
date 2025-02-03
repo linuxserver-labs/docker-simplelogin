@@ -49,7 +49,7 @@ RUN \
   apt-get update && \
   apt-get install -y --no-install-recommends \
     clang \
-    gcc-10 \
+    gcc \
     git \
     libre2-dev \
     ninja-build \
@@ -65,7 +65,7 @@ RUN \
   echo "**** cleanup ****" && \
   apt-get purge -y \
     clang \
-    gcc-10 \
+    gcc \
     git \
     libre2-dev \
     ninja-build \
