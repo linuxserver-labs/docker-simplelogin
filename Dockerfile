@@ -55,7 +55,9 @@ RUN \
     git \
     libre2-dev \
     ninja-build \
-    pkg-config && \
+    pkg-config \
+    python3 \
+    python3-dev && \
   curl -o /tmp/uv-installer.sh -L https://astral.sh/uv/install.sh && \
   sh /tmp/uv-installer.sh && \
   uv python install `cat .python-version` && \
@@ -73,7 +75,8 @@ RUN \
     git \
     libre2-dev \
     ninja-build \
-    pkg-config && \
+    pkg-config \
+    python3-dev && \
   apt-get autoremove -y && \
   apt-get autoclean -y && \
   rm -rf \
