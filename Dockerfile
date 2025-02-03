@@ -48,16 +48,12 @@ RUN \
   echo "**** install build packages ****" && \
   apt-get update && \
   apt-get install -y --no-install-recommends \
-    build-essential \
     clang \
-    cmake \
     gcc \
     git \
     libre2-dev \
     ninja-build \
-    pkg-config \
-    python3 \
-    python3-dev && \
+    pkg-config && \
   curl -o /tmp/uv-installer.sh -L https://astral.sh/uv/install.sh && \
   sh /tmp/uv-installer.sh && \
   uv python install `cat .python-version` && \
@@ -68,15 +64,12 @@ RUN \
     libre2-10 && \
   echo "**** cleanup ****" && \
   apt-get purge -y \
-    build-essential \
     clang \
-    cmake \
     gcc \
     git \
     libre2-dev \
     ninja-build \
-    pkg-config \
-    python3-dev && \
+    pkg-config && \
   apt-get autoremove -y && \
   apt-get autoclean -y && \
   rm -rf \
