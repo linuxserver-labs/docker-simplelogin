@@ -48,32 +48,28 @@ RUN \
   echo "**** install build packages ****" && \
   apt-get update && \
   apt-get install -y --no-install-recommends \
+    clang \
     gcc \
     git \
     libre2-dev \
-    pkg-config \
     ninja-build \
-    clang && \
+    pkg-config && \
   curl -o /tmp/uv-installer.sh -L https://astral.sh/uv/install.sh && \
   sh /tmp/uv-installer.sh && \
   uv python install `cat .python-version` && \
-  case "$(uname -m)" in \
-    'x86_64') export ARGS='' ;; \
-    'aarch64') export ARGS='--no-install-package pyre2 --no-install-package pycryptodome' ;; \
-  esac && \
-  uv sync --no-dev --locked $ARGS && \
+  uv sync --no-dev --locked --no-cache && \
   echo "**** install runtime packages ****" && \
   apt-get install -y \
     gnupg \
     libre2-10 && \
   echo "**** cleanup ****" && \
   apt-get purge -y \
+    clang \
     gcc \
     git \
     libre2-dev \
-    pkg-config \
     ninja-build \
-    clang && \
+    pkg-config && \
   apt-get autoremove -y && \
   apt-get autoclean -y && \
   rm -rf \
